@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-
+import { Header } from './components/Header/Header';
+import styled from 'styled-components/macro';
+import './style.css'
 function App() {
+
+const [nightTheme, setnightTheme] = useState(false)
+
+
+useEffect(()=> {
+  
+  let raw = localStorage.getItem('nightTheme')
+  setnightTheme(JSON.parse(raw))
+    
+},[])
+
+useEffect(()=> {
+  localStorage.setItem('nightTheme',JSON.stringify(nightTheme))
+
+},[nightTheme])
+
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={`Body${nightTheme?' Night':''}`}>
+      <Header setnightTheme={setnightTheme} nightTheme={nightTheme}/>
+      <ContentWrapper>
+
+     
+      
+      </ContentWrapper>
     </div>
   );
 }
 
 export default App;
+
+
+const ContentWrapper = styled.div`
+padding-top:72px;
+`
